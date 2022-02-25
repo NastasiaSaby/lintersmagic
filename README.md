@@ -1,0 +1,73 @@
+# pycodestyle_magic
+Magic function for pycodestyle module in Jupyter-Lab or Databricks Notebook
+
+# installation
+Make sure you've the Python package `pycodestyle`, and this `lintersmagic`.
+
+```
+pip install lintersmagic
+```
+
+# usage
+Enable the magic function by using the lintersmagic module in a cell
+
+`%load_ext lintersmagic`
+
+## to check a cell once:
+use the function as first line in your cell to check compliance with `pycodestyle` as such:
+
+`%%pycodestyle`
+
+## to auto check each cell:
+If you want this compliance checking turned on by default for each cell then run this magic line function in an empty cell:
+
+`%pycodestyle_on`
+
+You only need to call this once (observe the single `%`).
+
+To turn off the auto-checking for each cell use:
+
+`%pycodestyle_off`
+
+
+## config options for `%pycodestyle_on` (version >= 0.5)
+
+1. The option `--ignore` or `-i` will add the the named error(s) to the ignore list
+
+Example to ignore the errors `E225` and `E265`:
+```
+%pycodestyle_on --ignore E225,E265
+``` 
+Remember to _avoid_ spaces between declaring multiple errors.
+
+2. With the option `--max_line_length` or `-m` the max-line-length can be customised.
+
+Example to set the line length to `119` characters instead of the default `79`:
+```
+%pycodestyle_on --max_line_length 119
+```
+
+The options can be combined as well. 
+
+
+See notebooks in notebook directory for example use cases, as such:
+### Pycodestyle ([notebook](https://github.com/mattijn/pycodestyle_magic/blob/master/notebook/example%20pycodestyle_magic.ipynb))
+![alt text](img/pycodestyle.PNG)
+
+## Contribution
+
+### Dependencies and package
+
+Handled by Poetry ([documentation](https://python-poetry.org/))
+
+To get a new package:
+
+```
+poetry build
+```
+
+### Tests
+
+```
+poetry run ipython tests/*.py
+```
