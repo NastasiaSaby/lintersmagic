@@ -1,5 +1,7 @@
 # pycodestyle_magic
-Magic function for pycodestyle module in Jupyter-Lab or Databricks Notebook
+Magic function for pycodestyle module in Jupyter-Lab or Databricks notebooks.
+
+**Note that we've tested it only on Databricks notebooks**
 
 # installation
 Make sure you've the Python package `pycodestyle`, and this `lintersmagic`.
