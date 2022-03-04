@@ -8,8 +8,6 @@ authors = ["Bedrock streaming"]
 python = "^3.8"
 pycodestyle = "2.8.0"
 ipython = "7.17"
-flake8 = "^4.0.1"
-pytest = "^7.0.1"
 
 [tool.poetry.dev-dependencies]
 unittest = "^0.0"

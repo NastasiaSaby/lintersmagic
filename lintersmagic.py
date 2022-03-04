@@ -14,7 +14,6 @@ import os
 import logging
 import copy
 import pycodestyle as pycodestyle_module
-from contextlib import redirect_stdout
 
 from IPython.core.magic import register_cell_magic
 from IPython.core.magic import register_line_magic
@@ -104,18 +103,18 @@ def pycodestyle(line, cell, auto=False):
     # store code in a file, todo unicode
     if cell.startswith(('!', '%%', '%')):
         return
-    with tempfile.NamedTemporaryFile(mode='r+', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode='r+', delete=False) as file:
         # save to file
-        f.write('# The %%pycodestyle cell magic was here\n' + cell + '\n')
+        file.write('# The %%pycodestyle cell magic was here\n' + cell + '\n')
         # make sure it's written
-        f.flush()
-        f.close()
+        file.flush()
+        file.close()
     # now we can check the file by name.
     # we might be able to use 'stdin', have to check implementation
     format = '%(row)d:%(col)d: %(code)s %(text)s'
     pycodestyle = pycodestyle_module.StyleGuide(format=format, ignore=ignore_codes, max_line_length=max_line_length)
     # check the filename
-    pcs_result = pycodestyle.check_files(paths=[f.name])
+    pycodestyle.check_files(paths=[file.name])
     # split lines
     stdout = sys.stdout.getvalue().splitlines()
 
@@ -131,7 +130,7 @@ def pycodestyle(line, cell, auto=False):
         # restore
     sys.stdout = old_stdout
     try:
-        os.remove(f.name)
+        os.remove(file.name)
     except OSError as e:  ## if failed, report it back to the user ##
         logging.error("Error: %s - %s." % (e.filename, e.strerror))
     return
