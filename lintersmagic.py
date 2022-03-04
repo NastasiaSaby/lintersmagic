@@ -25,6 +25,7 @@ max_line_length = 79
 
 
 class VarWatcher(object):
+    # https://ipython.readthedocs.io/en/stable/config/callbacks.html
     def __init__(self, ip):
         self.shell = ip
 
