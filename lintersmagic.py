@@ -29,7 +29,7 @@ class VarWatcher(object):
         self.shell = ip
 
     def auto_run_pycodestyle(self, result):
-        pycodestyle(1, result.info.raw_cell, auto=True)
+        pycodestyle(1, result.info.raw_cell)
         if result.error_before_exec:
             print('Error before execution: %s' % result.error_before_exec)
 
@@ -80,7 +80,7 @@ def pycodestyle_off(line):
 
 
 @register_cell_magic
-def pycodestyle(line, cell, auto=False):
+def pycodestyle(line, cell):
     """pycodestyle cell magic for pep8"""
     global init_pycodestyle
     if init_pycodestyle == False:
@@ -109,12 +109,8 @@ def pycodestyle(line, cell, auto=False):
     for line in stdout:
         # on windows drive path also contains :
         line, col, error = line.split(':')[-4:]
-        # do not subtract 1 for line for %%pycodestyle, inc pre py3.6 string
-        if auto:
-            add = -1
-        else:
-            add = 0
-        logging.warning('{}:{}:{}'.format(int(line) + add, col, error))
+
+        logging.warning('{}:{}:{}'.format(int(line) + 0, col, error))
         # restore
     try:
         os.remove(file.name)
