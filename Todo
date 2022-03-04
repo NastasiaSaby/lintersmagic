@@ -1,4 +1,10 @@
-- Simplifier jusqu'à ce que plus clair pour toi
-- Comprendre le watcher, ce qui permettra peut-être de le tester
+MVP :
+- PCK en faire un type correct
+- Expliquer l'algo
+- Essayer de tester le plus possible
 - Ajouter GithubActions
-- Finir doc (exemple notebooks, dire que pour Databricks)
+- Finir doc : faire un exemple de notebooks avec l'attendu
+- Mettre les dists et expliquer comment installer, pre-requis et tout
+
+___________________________
+- Faire une lib
