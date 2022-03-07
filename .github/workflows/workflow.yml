@@ -12,5 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     # List of steps
     steps:
-      - name: My Step
-        run: echo "Hello World"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install
+      - name: Launch tests
+        run: poetry run ipython tests/*.py
