@@ -1,0 +1,17 @@
+# Display name of the workflow
+name: Validate and tests
+
+# Trigger conditions
+on:
+  push
+
+jobs:
+  # First job
+  my-job:
+    # Runner
+    runs-on:
+      - self-hosted
+    # List of steps
+    steps:
+      - name: My Step
+        run: echo "Hello World"
