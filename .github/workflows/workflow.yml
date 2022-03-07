@@ -9,8 +9,7 @@ jobs:
   # First job
   my-job:
     # Runner
-    runs-on:
-      - self-hosted
+    runs-on: ubuntu-latest
     # List of steps
     steps:
       - name: My Step
