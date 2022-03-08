@@ -5,7 +5,7 @@ description = "A package to include linters in Databricks notebooks: flake8 and 
 authors = ["Bedrock streaming"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "3.8.10"
 pycodestyle = "2.8.0"
 ipython = "7.17"
 
