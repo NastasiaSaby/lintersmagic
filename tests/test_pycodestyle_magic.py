@@ -1,11 +1,8 @@
 """
 Run under IPython with `ipython tests/test_.*py`.
-
-The unittest discovery with `python -m unittest discover -s tests`, or what I imagine to be the IPython version `ipython -m unittest discover -s tests` is not working, for some reason, and is complaining about `get_ipython()` not being in the context.
 """
 import unittest
-import logging
-from lintersmagic import pycodestyle, pycodestyle_on, vw
+from lintersmagic import pycodestyle
 
 class TestLinenumbers(unittest.TestCase):
 
@@ -54,27 +51,22 @@ report style issues.
             self.assertEqual(captured.records[0].getMessage(), "3:7: E201 whitespace after '('")
             self.assertEqual(captured.records[1].getMessage(), "3:26: E202 whitespace before ')'")
 
-    def test_pycodestyle_line_too_long(self):
+    def test_pycodestyle_on_skip_errors(self):
         """Test that leading comments lines are skipped when pycodestyle does
 report style issues.
         """
-        cell = '''aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'''
+        ip = get_ipython()
+        ip.history_manager.reset()
         with self.assertLogs() as captured:
-            pycodestyle(None, cell)
-            self.assertEqual(len(captured.records), 1)
-            self.assertEqual(captured.records[0].getMessage(), "2:80: E501 line too long (80 > 79 characters)")
+            ip.run_cell("%load_ext lintersmagic", store_history=True)
+            ip.run_cell("%pycodestyle_on --max_line_length 150 --ignore E225", store_history=True)
+            ip.run_cell("print( \"oh look kittens!\" )")
+            ip.run_cell("a=\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"",
+                        store_history=True)
+            self.assertEqual(len(captured.records), 2)
+            self.assertEqual(captured.records[0].getMessage(), "2:7: E201 whitespace after '('")
+            self.assertEqual(captured.records[1].getMessage(), "2:26: E202 whitespace before ')'")
 
-#     def test_pycodestyle_skip_line_too_long(self):
-#         """Test that leading comments lines are skipped when pycodestyle does
-# report style issues.
-#         """
-#         line = ''' --ignore E501'''
-#         next_cell = '''aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'''
-#         with self.assertLogs() as captured:
-#             pycodestyle_on(line)
-#             # pycodestyle(None, next_cell)
-#             self.assertEqual(len(captured.records), 4)
-#             self.assertEqual(captured.records[0].getMessage(), "2:80: E501 line too long (80 > 79 characters)")
 
 if __name__ == '__main__':
     unittest.main()
