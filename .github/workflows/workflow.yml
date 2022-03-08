@@ -1,16 +1,11 @@
-# Display name of the workflow
 name: Validate and tests
 
-# Trigger conditions
 on:
   push
 
 jobs:
-  # First job
-  my-job:
-    # Runner
+  ci:
     runs-on: ubuntu-latest
-    # List of steps
     steps:
       - name: Checkout
         uses: actions/checkout@v2
